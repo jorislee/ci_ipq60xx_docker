@@ -63,7 +63,7 @@ WORKDIR /home
 
 RUN git clone --recursive https://github.com/coolsnowwolf/openwrt-gl-ax1800.git
 
-WORKDIR /home/openwrt
+WORKDIR /home/openwrt-gl-ax1800
 
 RUN ./scripts/feeds update -a \
     && ./scripts/feeds install -a
