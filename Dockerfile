@@ -68,11 +68,6 @@ WORKDIR /home/openwrt-gl-ax1800
 RUN ./scripts/feeds update -a \
     && ./scripts/feeds install -a
 
-RUN echo "src-git oui https://github.com/jorislee/oui.git" >> feeds.conf.default \
-    && ./scripts/feeds update oui \
-    && ./scripts/feeds install -a oui \
-    && rm -rf feeds/packages/net/nginx package/feeds/packages/nginx
-
 RUN rm -f .config* && touch .config && \
     echo "CONFIG_HOST_OS_LINUX=y" >> .config && \
     echo "CONFIG_TARGET_ipq60xx=y" >> .config && \
