@@ -61,9 +61,9 @@ RUN npm install -g npm@8.19.2 &&\
 
 WORKDIR /home
 
-RUN git clone --recursive https://github.com/coolsnowwolf/openwrt-gl-ax1800.git
+RUN git clone --recursive https://github.com/coolsnowwolf/openwrt-gl-ax1800.git openwrt
 
-WORKDIR /home/openwrt-gl-ax1800
+WORKDIR /home/openwrt
 
 RUN ./scripts/feeds update -a \
     && ./scripts/feeds install -a
@@ -118,7 +118,24 @@ RUN rm -f .config* && touch .config && \
     make defconfig
 
 RUN make download -j8 \
-    && make -j1 V=w
+    && make -j1 V=w \
+    && rm -rf ./build_dir/toolchain-aarch64_cortex-a53_gcc-7.5.0_musl/ ./build_dir/host/ ./build_dir/hostpkg/ \
+    && cp ./bin/targets/ipq60xx/generic/openwrt-toolchain-ipq60xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.bz2 /opt \
+    && cp ./bin/targets/ipq60xx/generic/openwrt-imagebuilder-ipq60xx-generic.Linux-x86_64.tar.xz /home \
+    && cd /opt \
+    && tar -jxvf openwrt-toolchain-ipq60xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.bz2 \
+    && rm openwrt-toolchain-ipq60xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.bz2 \
+    && cd /home \
+    && tar -J -x -f openwrt-imagebuilder-ipq60xx-generic.Linux-x86_64.tar.xz \
+    && rm openwrt-imagebuilder-ipq60xx-generic.Linux-x86_64.tar.xz \
+    && cd /home/openwrt \
+    && rm -rf ./bin/
+
+ENV STAGING_DIR=/opt/openwrt-toolchain-ipq60xx-generic_gcc-7.5.0_musl.Linux-x86_64/toolchain-aarch64_cortex-a53_gcc-7.5.0_musl/bin
+
+WORKDIR /home/openwrt-imagebuilder-ipq60xx-generic.Linux-x86_64
+
+RUN make image PROFILE="glinet_gl-ax1800" PACKAGES="wget vim bash"
 
 WORKDIR /home
 
