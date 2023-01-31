@@ -131,6 +131,8 @@ RUN make download -j8 \
     && cd /home/openwrt \
     && rm -rf ./bin/
 
+ENV ARCH=arm64
+ENV CROSS_COMPILE=/opt/openwrt-toolchain-ipq60xx-generic_gcc-7.5.0_musl.Linux-x86_64/toolchain-aarch64_cortex-a53_gcc-7.5.0_musl/bin/aarch64-openwrt-linux-
 ENV STAGING_DIR=/opt/openwrt-toolchain-ipq60xx-generic_gcc-7.5.0_musl.Linux-x86_64/toolchain-aarch64_cortex-a53_gcc-7.5.0_musl/bin
 
 WORKDIR /home/openwrt-imagebuilder-ipq60xx-generic.Linux-x86_64
