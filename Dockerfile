@@ -77,13 +77,11 @@ RUN rm -f .config* && touch .config && \
     echo "CONFIG_SDK=y" >> .config && \
     echo "CONFIG_MAKE_TOOLCHAIN=y" >> .config && \
     echo "CONFIG_IB=y" >> .config && \
+    echo "CONFIG_ALL=y" >> .config && \
     echo "CONFIG_PACKAGE_vim=y" >> .config && \
     echo "CONFIG_PACKAGE_bash=y" >> .config && \
     echo "CONFIG_PACKAGE_wget=y" >> .config && \
     echo "CONFIG_PACKAGE_ethtool=y" >> .config && \
-    echo "CONFIG_PACKAGE_oui-rpc-core=y" >> .config && \
-    echo "CONFIG_PACKAGE_oui-ui-core=y" >> .config && \
-    echo "CONFIG_OUI_USE_HOST_NODE=y" >> .config && \
     echo "CONFIG_PACKAGE_kmod-usb-core=y" >> .config && \
     echo "CONFIG_PACKAGE_kmod-usb-net=y" >> .config && \
     echo "CONFIG_PACKAGE_kmod-usb-net-cdc-eem=y" >> .config && \
