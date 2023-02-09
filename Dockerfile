@@ -119,17 +119,11 @@ RUN rm -f .config* && touch .config && \
 
 RUN make download -j8 \
     && make -j1 V=w \
-    && rm -rf ./build_dir/toolchain-aarch64_cortex-a53_gcc-7.5.0_musl/ ./build_dir/host/ ./build_dir/hostpkg/ \
-    && cp ./bin/targets/ipq60xx/generic/openwrt-toolchain-ipq60xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.bz2 /opt \
-    && cp ./bin/targets/ipq60xx/generic/openwrt-imagebuilder-ipq60xx-generic.Linux-x86_64.tar.xz /home \
-    && cd /opt \
-    && tar -jxvf openwrt-toolchain-ipq60xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.bz2 \
-    && rm openwrt-toolchain-ipq60xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.bz2 \
-    && cd /home \
-    && tar -J -x -f openwrt-imagebuilder-ipq60xx-generic.Linux-x86_64.tar.xz \
-    && rm openwrt-imagebuilder-ipq60xx-generic.Linux-x86_64.tar.xz \
-    && cd /home/openwrt \
-    && rm -rf ./bin/
+    && tar -jxvf ./bin/targets/ipq60xx/generic/openwrt-toolchain-ipq60xx-generic_gcc-7.5.0_musl.Linux-x86_64.tar.bz2 -C /opt/ \
+    && tar -Jxvf ./bin/targets/ipq60xx/generic/openwrt-imagebuilder-ipq60xx-generic.Linux-x86_64.tar.xz -C /home/ \
+    && mkdir -p /opt/Kernel-ipq60xx \
+    && mv ./build_dir/target-aarch64_cortex-a53_musl/linux-ipq60xx_generic/linux-4.4.60/ /opt/Kernel-ipq60xx \
+    && cd /home && rm -rf ./openwrt
 
 ENV ARCH=arm64
 ENV CROSS_COMPILE=/opt/openwrt-toolchain-ipq60xx-generic_gcc-7.5.0_musl.Linux-x86_64/toolchain-aarch64_cortex-a53_gcc-7.5.0_musl/bin/aarch64-openwrt-linux-
